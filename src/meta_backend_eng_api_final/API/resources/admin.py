@@ -1,7 +1,10 @@
+from django.apps import apps
 from django.contrib import admin
-from resources.models import Cart, Category, Order, OrderItem, get_user_model
 
-# Register your models here.
+all_models = apps.get_models()
 
-for model in [Cart, Category, Order, OrderItem, get_user_model()]:
-    admin.register(model)
+for model in all_models:
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass
